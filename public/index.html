@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <form id="formulario" action="">
+        <input id="input-mensaje" autocomplete="off" />
+        <button>Enviar</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const socket = io();
+            
+            document.getElementById('formulario').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const mensaje = document.getElementById('input-mensaje').value;
+                socket.emit('mensaje', mensaje);
+                document.getElementById('input-mensaje').value = '';
+            });
+          
+            socket.on('mensaje', (mensaje) => {
+                console.log(mensaje);
+            });
+        });
+    </script>
+</body>
+</html>
